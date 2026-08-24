@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--
+  learning-recap 템플릿
+  - 기준 톤: 코드앤버터 인수인계 가이드 (쉬운 설명 → 점진 심화, 콜아웃/표/비유)
+  - 사용법: 각 [[...]] 자리표시자와 예시 블록을 실제 내용으로 교체.
+    필요 없는 섹션은 통째로 삭제, 반복되는 항목은 복제해서 사용.
+  - CSS는 그대로 두면 됨(자립형: 외부 리소스 없음 → Chrome 헤드리스로 PDF 변환).
+-->
+<title>[[제목]]</title>
+<style>
+  :root {
+    --ink: #1f2328; --muted: #6b7280; --line: #e6e6ec;
+    --section: #17181c;                 /* 검은 섹션 바 */
+    --code-bg: #f2f2f5;
+    --blue: #3b82f6; --blue-bg: #eef4ff;      /* 핵심/중요 */
+    --orange: #d59300; --orange-bg: #fdf6e7;  /* 비유 */
+    --green: #22c55e; --green-bg: #eefbf1;    /* 예시 */
+    --amber: #d97706;                          /* 질문(Q) */
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: "Apple SD Gothic Neo", "Pretendard", -apple-system, "Segoe UI", "Noto Sans KR", sans-serif;
+    color: var(--ink); line-height: 1.68; margin: 0; font-size: 13.5px; background: #fff;
+  }
+  .page { max-width: 820px; margin: 0 auto; padding: 40px 44px 60px; }
+
+  /* ── 표지 ── */
+  .cover { margin-bottom: 24px; }
+  .cover h1 { font-size: 25px; font-weight: 800; letter-spacing: -.01em; margin: 0 0 6px; }
+  .cover .sub { color: var(--muted); font-size: 13px; margin: 0; }
+
+  /* ── 인트로 콜아웃 ("이 기록은?") ── */
+  .intro {
+    background: #f4f6fa; border-left: 4px solid var(--blue); border-radius: 0 8px 8px 0;
+    padding: 12px 16px; margin: 18px 0 8px; font-size: 13px;
+  }
+  .intro b { color: var(--blue); }
+
+  /* ── 섹션 헤더 (검은 바) ── */
+  h2 {
+    background: var(--section); color: #fff; font-size: 15px; font-weight: 700;
+    padding: 9px 14px; border-radius: 6px; margin: 30px 0 14px; letter-spacing: -.01em;
+  }
+  h3 { font-size: 14px; font-weight: 700; margin: 18px 0 6px; }
+  p { margin: 8px 0; }
+  ul { margin: 8px 0; padding-left: 20px; } li { margin: 4px 0; }
+  strong { font-weight: 700; }
+  code {
+    background: var(--code-bg); padding: 1px 5px; border-radius: 4px; font-size: 12px;
+    font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+
+  /* ── 표 ── */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 12.5px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: #f4f4f6; font-weight: 700; border-bottom: 1.5px solid #dcdce2; }
+
+  /* ── 콜아웃 3종 ── */
+  .callout { border-radius: 8px; padding: 11px 15px; margin: 12px 0; font-size: 12.8px; }
+  .callout.key { background: var(--blue-bg); border-left: 3px solid var(--blue); }
+  .callout.key b { color: var(--blue); }
+  .callout.analogy { background: var(--orange-bg); border-left: 3px solid var(--orange); }
+  .callout.analogy b { color: var(--orange); }
+  .callout.example { background: var(--green-bg); border: 1px dashed var(--green); }
+
+  /* ── 단계 리스트 (원형 번호 뱃지) ── */
+  ol.steps { list-style: none; counter-reset: s; padding: 0; margin: 10px 0; }
+  ol.steps > li { counter-increment: s; position: relative; padding: 4px 0 10px 34px; margin: 0; }
+  ol.steps > li::before {
+    content: counter(s); position: absolute; left: 0; top: 3px;
+    width: 22px; height: 22px; border-radius: 50%; background: var(--section); color: #fff;
+    font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+  }
+  ol.steps .why { color: var(--muted); font-size: 12px; }
+
+  /* ── Q&A (막힌 지점 / 질문) — 이 기록의 핵심 ── */
+  .qa { border: 1px solid var(--line); border-radius: 10px; padding: 12px 15px; margin: 12px 0; }
+  .qa .q { font-weight: 700; display: flex; gap: 8px; align-items: flex-start; }
+  .qa .q .badge { flex: none; background: #fff3e0; color: var(--amber); font-size: 11px; font-weight: 800;
+    padding: 1px 8px; border-radius: 20px; margin-top: 1px; }
+  .qa .a { margin-top: 8px; padding-left: 2px; font-size: 12.8px; }
+  .qa .a .badge { background: var(--blue-bg); color: var(--blue); font-size: 11px; font-weight: 800;
+    padding: 1px 8px; border-radius: 20px; margin-right: 6px; }
+
+  /* ── 코드/명령 블록 ── */
+  pre {
+    background: var(--code-bg); border: 1px solid var(--line); border-radius: 10px;
+    padding: 13px 15px; overflow-x: auto; font-size: 11.8px; line-height: 1.55;
+    font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace; color: #2b2440;
+  }
+
+  .foot { margin-top: 34px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11.5px; }
+
+  @page { size: A4; margin: 14mm 12mm; }
+  @media print {
+    .page { padding: 0; max-width: none; }
+    h2 { break-after: avoid; }
+    table, pre, .callout, .qa, .intro, ol.steps > li { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══════ 표지 ═══════ -->
+  <div class="cover">
+    <h1>[[프로젝트]] 학습 기록 — [[이번 회차 주제]]</h1>
+    <p class="sub">[[한 줄 요약]] · [[YYYY-MM-DD]] · 진행 범위: [[예: Step 0~1]]</p>
+  </div>
+
+  <!-- ═══════ 인트로 콜아웃 ═══════ -->
+  <div class="intro">
+    <b>이 기록은?</b> [[이번 회차에 무엇을 했고 무엇을 배웠는지 2~3문장. 나중에 다시 읽으면 흐름이 잡히도록.]]
+  </div>
+
+  <!-- ═══════ 1. 한눈에 ═══════ -->
+  <h2>1. 한눈에 — 이번에 한 일</h2>
+  <p>[[이번 세션/단계에서 달성한 것을 쉬운 말로 요약. 큰 그림 먼저.]]</p>
+  <ul>
+    <li>[[한 일 1]]</li>
+    <li>[[한 일 2]]</li>
+  </ul>
+
+  <!-- ═══════ 2. 배운 개념 ═══════ -->
+  <h2>2. 오늘 배운 개념</h2>
+  <h3>[[개념 이름 — 예: 모노레포란?]]</h3>
+  <p>[[쉬운 설명.]]</p>
+  <div class="callout analogy"><b>비유로 이해하기 🏣</b> [[일상 비유로 한 번 더. 예: 모노레포는 여러 방을 한 집에서…]]</div>
+  <div class="callout key"><b>핵심 💡</b> [[꼭 기억할 한 줄.]]</div>
+
+  <!-- ═══════ 3. 따라한 과정 ═══════ -->
+  <h2>3. 따라한 과정 (단계별)</h2>
+  <ol class="steps">
+    <li>[[한 동작]] <span class="why">— 왜: [[이걸 왜 했는지]]</span></li>
+    <li>[[다음 동작]] <span class="why">— 왜: [[이유]]</span></li>
+  </ol>
+  <pre>[[실제로 실행한 명령/코드가 있으면 여기 — 없으면 이 블록 삭제]]</pre>
+
+  <!-- ═══════ 4. 막힌 지점 & 질문 (핵심) ═══════ -->
+  <h2>4. 막힌 지점 &amp; 질문 (Q&amp;A)</h2>
+  <p class="sub" style="color:var(--muted);font-size:12px;margin:0 0 6px">이번에 헷갈렸거나 물어봤던 것들. 미래의 내가 같은 데서 막히지 않도록.</p>
+  <div class="qa">
+    <div class="q"><span class="badge">Q</span><span>[[내가 던진 질문 그대로 — 예: RN/Flutter로 웹도 되는 게 웹뷰인가?]]</span></div>
+    <div class="a"><span class="badge">A</span>[[그때 이해한 답을 쉽게 정리. 헷갈린 이유와 함께.]]</div>
+  </div>
+  <div class="qa">
+    <div class="q"><span class="badge">Q</span><span>[[또 다른 질문/막힘]]</span></div>
+    <div class="a"><span class="badge">A</span>[[답]]</div>
+  </div>
+
+  <!-- ═══════ 5. 내린 결정 ═══════ -->
+  <h2>5. 이번에 내린 결정</h2>
+  <table>
+    <thead><tr><th style="width:34%">결정</th><th>이유 / 대안</th></tr></thead>
+    <tbody>
+      <tr><td>[[정한 것]]</td><td>[[왜 그렇게 정했는지, 어떤 대안을 제쳤는지]]</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ═══════ 6. 용어 정리 ═══════ -->
+  <h2>6. 새로 나온 용어</h2>
+  <table>
+    <thead><tr><th style="width:24%">용어</th><th>쉽게 설명</th></tr></thead>
+    <tbody>
+      <tr><td><code>[[용어]]</code></td><td>[[한 줄 설명]]</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ═══════ 7. 다음 단계 ═══════ -->
+  <h2>7. 다음 단계</h2>
+  <ul>
+    <li>[[이어서 할 일]]</li>
+  </ul>
+
+  <div class="foot">[[프로젝트]] 학습 기록 · [[이번 회차 주제]] · [[YYYY-MM-DD]]</div>
+
+</div>
+</body>
+</html>
