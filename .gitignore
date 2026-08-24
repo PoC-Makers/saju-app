@@ -36,3 +36,6 @@ yarn-error.log*
 
 # Test coverage
 coverage/
+
+# 개인 학습 기록 (learning-recap 산출물) — 개인화 문서라 추적 안 함
+docs/recaps/
