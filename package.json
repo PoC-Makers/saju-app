@@ -1,0 +1,9 @@
+{
+  "name": "saju-app",
+  "private": true,
+  "packageManager": "yarn@4.18.0",
+  "workspaces":[
+    "apps/*",
+    "packages/*"
+  ]
+}
