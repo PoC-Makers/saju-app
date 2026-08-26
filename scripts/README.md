@@ -27,3 +27,14 @@
 ```
 
 요구: `gh` CLI 로그인 + 해당 저장소 admin 권한.
+
+### `github-labels.sh`
+
+이슈·PR 라벨을 커밋 타입 10종에 맞춰 생성한다. 멱등(`--force`로 갱신).
+
+```bash
+./scripts/setup/github-labels.sh            # origin 저장소에 적용
+./scripts/setup/github-labels.sh OWNER/REPO # 대상 지정
+```
+
+이슈 템플릿(`.github/ISSUE_TEMPLATE/`)이 이 라벨명을 참조하므로, 템플릿보다 **먼저 실행**해야 라벨이 자동으로 붙는다.
