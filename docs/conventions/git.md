@@ -56,6 +56,15 @@ test(core): 절기 경계 대조 테스트
 - 이슈·PR은 `.github/ISSUE_TEMPLATE/`, `.github/PULL_REQUEST_TEMPLATE.md` 템플릿을 따른다.
 - PR 제목은 커밋과 같은 `type(scope): 설명`.
 - PR 본문에 연관 이슈를 연결한다 — `Closes #5` (머지 시 이슈 자동 종료).
+- **이슈·PR에는 담당자와 라벨을 붙인다.** 이슈 템플릿은 라벨을 자동으로 붙이지만, **CLI로 만들 때와 PR에는 직접 지정**해야 한다.
+
+  ```bash
+  gh issue create --assignee @me --label "📝 Docs" ...
+  gh pr create    --assignee @me --label "📝 Docs" ...
+  ```
+
+  - 라벨은 커밋 타입과 같은 체계다 (`scripts/setup/github-labels.sh`).
+  - 담당자는 템플릿에 하드코딩하지 않는다 — 나중에 다른 사람이 만든 이슈까지 배정되기 때문.
 
 ## 머지 전략
 
@@ -83,7 +92,12 @@ test(core): 절기 경계 대조 테스트
 | 브랜치 삭제 차단 | ✅ | ✅ |
 | linear history 강제 | ❌ (merge commit을 금지하는 규칙이라 걸 수 없음) | ✅ |
 | 허용 머지 방식 | `merge`만 | `squash`만 |
-| admin bypass | ✅ | ✅ |
+| admin bypass | ❌ 사용하지 않음 | ❌ 사용하지 않음 |
+
+> **bypass를 쓰지 않는 이유** — `bypass_actors`에 등록되면 그 ruleset의 **규칙 전체가 그 대상에게 적용되지 않는다.**
+> 실제로 우회를 켜둔 상태에서 `squash`만 허용한 `develop`에 merge commit이 그대로 들어갔고, 우회를 끄자
+> `Merge commits are not allowed on this repository`로 차단됐다(임시 저장소 실측).
+> 규칙 때문에 막히면 우회를 켜지 말고 스크립트를 고쳐 재적용한다.
 
 **아직 적용하지 않음 (도입 예정)**
 - **리뷰 승인 필수** — 팀원이 생기면 (솔로는 self-approve 불가라 막힘)
