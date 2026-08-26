@@ -1,6 +1,6 @@
 name: 📦 기타 작업
 description: 문서·테스트·정리 등 위에 해당하지 않는 작업인가요?
-labels: ["📦 Chore"]
+labels: ["🧹 Chore"]
 body:
   - type: markdown
     attributes:

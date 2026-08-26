@@ -2,7 +2,7 @@
 
 ## 커밋 메시지
 
-한국어, 형식 `<type>(<scope>): <설명>`. **scope 필수** (애매하면 관련 모듈 또는 `monorepo`).
+한국어, 형식 `<type>(<scope>): <설명>`. **scope 필수**.
 
 | 타입 | 뜻 |
 |------|-----|
@@ -14,17 +14,18 @@
 | `docs` | 문서 |
 | `test` | 테스트 추가/수정 |
 | `build` | 빌드 설정·의존성 (tsconfig·번들러·패키지) |
+| `config` | 개발 환경·도구 설정 (lint·포맷·훅·에디터·환경변수) |
 | `ci` | CI 설정 |
-| `chore` | 그 외 잡일·설정 |
+| `chore` | 그 외 잡일 |
 
-**scope**: `core` · `api` · `web` · `config`
+**scope**: `core` · `api` · `web` · `root`
 
 | scope | 범위 |
 |-------|------|
 | `core` · `api` · `web` | 각 패키지 |
-| `config` | 프로젝트 전반 설정 — 루트 빌드·워크스페이스·lint·훅·스킬·MCP 등 특정 패키지에 속하지 않는 것 |
+| `root` | 모노레포 최상위 — 루트 설정·워크스페이스·`.github`·스크립트 등 특정 패키지에 속하지 않는 것 |
 
-- 빌드·의존성 변경도 **어느 패키지인지** scope로 표시: `build(core)` · `build(web)` · `build(config)`
+- 빌드·의존성 변경도 **어느 패키지인지** scope로 표시: `build(core)` · `build(web)` · `build(root)`
 - 루트 전역 문서/잡일은 scope 생략 가능: `docs: 컨벤션 정립`
 - **어느 scope에도 애매하면 임의로 만들지 말고 물어본다** (필요하면 scope 목록을 확장한다)
 
@@ -32,7 +33,7 @@
 feat(core): 사주팔자 계산 엔진
 fix(web): 입력폼 시각 검증 오류
 build(core): dayjs 추가
-build(monorepo): turbo.json 파이프라인 설정
+config(root): ESLint·Prettier 설정 추가
 test(core): 절기 경계 대조 테스트
 ```
 
