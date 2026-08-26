@@ -68,7 +68,9 @@ test(core): 절기 경계 대조 테스트
 
 ## 브랜치 보호
 
-`scripts/setup/github-config.sh` 로 적용한다 (실행 기록이 스크립트로 남아 재현 가능).
+`scripts/setup/github-config.sh` 로 적용한다 (실행 기록이 스크립트로 남아 재현 가능). 보호는 **ruleset**으로 건다 — classic branch protection보다 규칙 중첩·우회 지정·시범(evaluate) 모드가 유연하다.
+
+> 무료 플랜에서는 **public 저장소만** 보호를 걸 수 있다. private으로 전환하려면 Pro/Team 결제가 필요하다.
 
 | 항목 | `main` | `develop` |
 |------|:---:|:---:|
