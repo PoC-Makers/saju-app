@@ -34,7 +34,11 @@ fi
 #                   GitHub의 merge commit 은 항상 --no-ff 라서 fast-forward 가능해도 합류 커밋이 남는다.
 #   non_fast_forward: force push 차단
 #   deletion      : 브랜치 삭제 차단 (main·develop 상시 유지)
-#   bypass_actors : RepositoryRole 5(admin)에게 우회 허용
+#
+# bypass_actors 는 비운다. 임시 저장소로 실측한 결과:
+#   admin 우회 ON  → squash 만 허용해둔 브랜치에 merge commit 이 그대로 들어감 (차단 실패)
+#   admin 우회 OFF → "Merge commits are not allowed on this repository" 로 차단됨
+# 규칙 때문에 막히면 우회를 켜지 말고 이 스크립트를 고쳐 재적용한다.
 apply_ruleset() {
   local branch="$1" linear="$2" methods="$3" name="protect-$1"
   local rules="[{\"type\":\"pull_request\",\"parameters\":{\"required_approving_review_count\":0,\"dismiss_stale_reviews_on_push\":false,\"require_code_owner_review\":false,\"require_last_push_approval\":false,\"required_review_thread_resolution\":false,\"allowed_merge_methods\":$methods}},{\"type\":\"non_fast_forward\"},{\"type\":\"deletion\"}]"
@@ -47,7 +51,7 @@ apply_ruleset() {
   "target": "branch",
   "enforcement": "active",
   "conditions": { "ref_name": { "include": ["refs/heads/$branch"], "exclude": [] } },
-  "bypass_actors": [{ "actor_id": 5, "actor_type": "RepositoryRole", "bypass_mode": "always" }],
+  "bypass_actors": [],
   "rules": $rules
 }
 JSON
