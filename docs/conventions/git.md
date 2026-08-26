@@ -64,6 +64,9 @@ test(core): 절기 경계 대조 테스트
 | 작업 브랜치 → `develop` | **Squash and merge** | PR 하나 = 커밋 하나. develop 이력을 기능 단위 선형으로 |
 | `develop` → `main` | **Merge commit (3-way)** | 합류 지점이 그래프에 남아, 어떤 기능들이 함께 배포됐는지 추적 |
 
+- 브랜치마다 **허용 머지 방식을 ruleset으로 제한**하므로(`allowed_merge_methods`), PR 화면에 맞는 버튼만 나온다.
+- GitHub의 merge commit은 **항상 `--no-ff`** 로 동작한다 — fast-forward가 가능한 상황(main이 develop의 조상)에서도 합류 커밋이 생긴다.
+
 - 머지된 **작업 브랜치는 자동 삭제**한다. `main`·`develop`은 상시 유지 — 보호 설정의 "브랜치 삭제 차단"으로 자동 삭제 대상에서 제외된다.
 - `main` 머지 후 **태그 `x.x.x`** 를 붙이고 changelog를 남긴다.
 
@@ -78,7 +81,8 @@ test(core): 절기 경계 대조 테스트
 | PR 필수 (직접 push 금지) | ✅ | ✅ |
 | force push 차단 | ✅ | ✅ |
 | 브랜치 삭제 차단 | ✅ | ✅ |
-| linear history 강제 | ❌ (merge commit 필요) | ✅ |
+| linear history 강제 | ❌ (merge commit을 금지하는 규칙이라 걸 수 없음) | ✅ |
+| 허용 머지 방식 | `merge`만 | `squash`만 |
 | admin bypass | ✅ | ✅ |
 
 **아직 적용하지 않음 (도입 예정)**

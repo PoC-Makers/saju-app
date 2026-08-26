@@ -28,14 +28,16 @@ if ! gh api "repos/$REPO/branches/develop" >/dev/null 2>&1; then
   gh api -X POST "repos/$REPO/git/refs" -f ref=refs/heads/develop -f sha="$MAIN_SHA" >/dev/null
 fi
 
-# ruleset 적용 — $1=브랜치, $2=linear history 강제(true/false)
+# ruleset 적용 — $1=브랜치, $2=linear history 강제(true/false), $3=허용 머지 방식(JSON 배열)
 #   pull_request  : PR 없이 push 불가 (승인 0명 = 리뷰 필수 아님)
+#                   allowed_merge_methods 로 브랜치마다 허용 방식을 제한한다.
+#                   GitHub의 merge commit 은 항상 --no-ff 라서 fast-forward 가능해도 합류 커밋이 남는다.
 #   non_fast_forward: force push 차단
 #   deletion      : 브랜치 삭제 차단 (main·develop 상시 유지)
 #   bypass_actors : RepositoryRole 5(admin)에게 우회 허용
 apply_ruleset() {
-  local branch="$1" linear="$2" name="protect-$1"
-  local rules='[{"type":"pull_request","parameters":{"required_approving_review_count":0,"dismiss_stale_reviews_on_push":false,"require_code_owner_review":false,"require_last_push_approval":false,"required_review_thread_resolution":false,"allowed_merge_methods":["squash","merge"]}},{"type":"non_fast_forward"},{"type":"deletion"}]'
+  local branch="$1" linear="$2" methods="$3" name="protect-$1"
+  local rules="[{\"type\":\"pull_request\",\"parameters\":{\"required_approving_review_count\":0,\"dismiss_stale_reviews_on_push\":false,\"require_code_owner_review\":false,\"require_last_push_approval\":false,\"required_review_thread_resolution\":false,\"allowed_merge_methods\":$methods}},{\"type\":\"non_fast_forward\"},{\"type\":\"deletion\"}]"
   [ "$linear" = "true" ] && rules="${rules%]},{\"type\":\"required_linear_history\"}]"
 
   local payload
@@ -63,7 +65,8 @@ JSON
 }
 
 # 리뷰 승인 필수(count>0)·CI 통과 필수(required_status_checks)는 팀·CI 생긴 뒤 도입.
-apply_ruleset main false     # main: develop→main 이 merge commit 이라 linear 강제 불가
-apply_ruleset develop true   # develop: squash 만 들어와 선형 유지
+# required_linear_history 는 merge commit 을 금지하는 규칙이라 main 에는 걸 수 없다.
+apply_ruleset main    false '["merge"]'   # develop→main: 합류 지점을 남기려 merge commit 만
+apply_ruleset develop true  '["squash"]'  # 작업→develop: 기능 단위 한 커밋으로 선형 유지
 
 echo "✅ 완료 — 확인: gh api repos/$REPO/rulesets --jq '.[].name'"
