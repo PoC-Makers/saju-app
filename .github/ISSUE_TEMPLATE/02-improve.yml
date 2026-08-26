@@ -1,0 +1,39 @@
+name: 🛠 개선
+description: 구조를 개선하거나 성능을 높여야 할 부분이 있나요?
+labels: ["♻️ Refactor", "⚡ Perf"]
+body:
+  - type: markdown
+    attributes:
+      value: "구조 개선·성능 개선 라벨이 함께 붙습니다. 해당 없는 라벨은 등록 후 제거해주세요."
+
+  - type: textarea
+    attributes:
+      label: 🎯 현재 문제
+      description: 지금 무엇이 불편하거나 느린지 적어주세요.
+      placeholder: "예: 계산 로직이 컴포넌트 안에 섞여 있어 테스트가 어려움 / 절기 계산이 매 요청마다 반복돼 느림"
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: ✅ 작업할 내용
+      description: 어떻게 개선할지 체크리스트로 적어주세요.
+      placeholder: |
+        - [ ] 계산 로직을 packages/core로 분리
+        - [ ] 기존 동작 유지 확인(테스트)
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: 📊 성능 목표
+      description: 성능 개선이라면 현재 측정치와 목표를 적어주세요. (구조 개선만이면 비워두세요)
+      placeholder: "예: 원국 계산 평균 180ms → 50ms 이하"
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
+      label: 🔗 참고 자료
+    validations:
+      required: false

@@ -1,0 +1,30 @@
+name: 📦 기타 작업
+description: 문서·테스트·정리 등 위에 해당하지 않는 작업인가요?
+labels: ["📦 Chore"]
+body:
+  - type: markdown
+    attributes:
+      value: "문서 작업이면 `📝 Docs`, 테스트 작업이면 `🧪 Test` 라벨을 함께 붙여주세요."
+
+  - type: textarea
+    attributes:
+      label: 🎯 작업 목표
+      description: 무엇을 왜 하는지 적어주세요.
+      placeholder: "예: 사주 용어(십성·오행) 정리 문서 작성"
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: ✅ 작업할 내용
+      placeholder: |
+        - [ ] 용어 목록 정리
+        - [ ] docs/glossary.md 작성
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: 🔗 참고 자료
+    validations:
+      required: false

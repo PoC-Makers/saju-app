@@ -1,0 +1,35 @@
+name: 🐞 버그
+description: 잘못 동작하는 것을 발견했나요?
+labels: ["🐞 Fix"]
+body:
+  - type: textarea
+    attributes:
+      label: 🐞 현상
+      description: 무엇이 잘못됐고 무엇을 기대했는지 적어주세요.
+      placeholder: "예: 23시 출생 입력 시 일주가 하루 밀려 계산됨. 자시라 다음 날 일간이 나와야 함."
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: 🔁 재현 방법
+      placeholder: |
+        1. 입력 폼에 1990-01-01 23:30 입력
+        2. 결과 화면의 일주 확인
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: 📄 로그
+      description: 에러 로그가 있으면 붙여넣어 주세요.
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
+      label: 🌏 발생 환경
+      placeholder: "예: macOS 15, Chrome 130, Node 24, apps/web 로컬"
+    validations:
+      required: false
