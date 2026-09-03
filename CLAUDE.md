@@ -20,6 +20,11 @@
 | 테스트 | Vitest |
 | 배포 | web: Vercel / api: 미정 |
 
+## AI 작업 규칙
+
+- 커밋은 단계별로 자유롭게 남기되, **PR 생성 전에는 제목·본문을 보여주고 승인**받는다.
+- **PR 병합은 사용자가 명시적으로 지시했을 때만** 한다. 자동 병합 금지. (리뷰·CI 게이트 부재를 규율로 보완)
+
 ## 컨벤션
 - @docs/conventions/security.md
 - @docs/conventions/git.md
