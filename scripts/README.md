@@ -30,7 +30,7 @@
 
 ### `github-labels.sh`
 
-이슈·PR 라벨을 커밋 타입 10종에 맞춰 생성한다. 멱등(`--force`로 갱신).
+이슈·PR 라벨을 커밋 타입 11종에 맞춰 생성한다. 멱등(`--force`로 갱신).
 
 ```bash
 ./scripts/setup/github-labels.sh            # origin 저장소에 적용
