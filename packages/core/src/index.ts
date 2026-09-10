@@ -1,0 +1,1 @@
+export const hello = () => "saju core is connected";
