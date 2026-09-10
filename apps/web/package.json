@@ -1,0 +1,9 @@
+{
+    "name": "@saju/web",
+    "version": "0.0.1",
+    "private": true,
+    "type": "module",
+    "dependencies": {
+        "@saju/core": "workspace:*"
+    }
+}
