@@ -6,7 +6,7 @@
 #    초기 세팅·라벨 체계 변경 때 쓰고, 운영 중 재실행은 피할 것(재부착 필요).
 # 요구: gh CLI 로그인, 저장소 write 권한.
 #
-#   ./scripts/setup/github-labels.sh [OWNER/REPO]   # 생략 시 현재 origin 사용
+#   ./scripts/setup/github/labels.sh [OWNER/REPO]   # 생략 시 현재 origin 사용
 set -euo pipefail
 
 REPO="${1:-$(gh repo view --json nameWithOwner -q .nameWithOwner)}"

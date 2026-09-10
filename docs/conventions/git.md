@@ -18,12 +18,20 @@
 | `ci` | CI 설정 |
 | `chore` | 그 외 잡일 |
 
-**scope**: `core` · `api` · `web` · `root`
+**scope**: `core` · `api` · `web` · `apps` · `packages` · `root`
 
 | scope | 범위 |
 |-------|------|
 | `core` · `api` · `web` | 각 패키지 |
+| `apps` · `packages` | 그 그룹의 여러 패키지에 걸친, **쪼갤 수 없는** 변경 |
 | `root` | 모노레포 최상위 — 루트 설정·워크스페이스·`.github`·스크립트 등 특정 패키지에 속하지 않는 것 |
+
+**`apps`·`packages`는 쪼갤 수 없을 때만 쓴다.**
+- 판별: 패키지별로 커밋을 나눴을 때 **각각이 독립적으로 성립하는가?**
+  - 성립한다 → **쪼갠다** (`chore(api)` + `chore(web)`)
+  - 성립하지 않는다 → 그룹 scope (한쪽만 적용하면 깨지거나 의미가 없는 변경)
+- 예: 전 앱 공통 tsconfig 상속 구조 변경, 앱 전체에 걸친 경로 별칭 규칙 변경
+- **"한 번에 하니 편해서"는 사유가 되지 않는다.**
 
 - 빌드·의존성 변경도 **어느 패키지인지** scope로 표시: `build(core)` · `build(web)` · `build(root)`
 - 루트 전역 문서/잡일은 scope 생략 가능: `docs: 컨벤션 정립`
@@ -63,7 +71,7 @@ test(core): 절기 경계 대조 테스트
   gh pr create    --assignee @me --label "📝 Docs" ...
   ```
 
-  - 라벨은 커밋 타입과 같은 체계다 (`scripts/setup/github-labels.sh`).
+  - 라벨은 커밋 타입과 같은 체계다 (`scripts/setup/github/labels.sh`).
   - 담당자는 템플릿에 하드코딩하지 않는다 — 나중에 다른 사람이 만든 이슈까지 배정되기 때문.
 
 ## 머지 전략
@@ -81,7 +89,7 @@ test(core): 절기 경계 대조 테스트
 
 ## 브랜치 보호
 
-`scripts/setup/github-config.sh` 로 적용한다 (실행 기록이 스크립트로 남아 재현 가능). 보호는 **ruleset**으로 건다 — classic branch protection보다 규칙 중첩·우회 지정·시범(evaluate) 모드가 유연하다.
+`scripts/setup/github/config.sh` 로 적용한다 (실행 기록이 스크립트로 남아 재현 가능). 보호는 **ruleset**으로 건다 — classic branch protection보다 규칙 중첩·우회 지정·시범(evaluate) 모드가 유연하다.
 
 > 무료 플랜에서는 **public 저장소만** 보호를 걸 수 있다. private으로 전환하려면 Pro/Team 결제가 필요하다.
 

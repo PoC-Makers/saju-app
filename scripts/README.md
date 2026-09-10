@@ -1,40 +1,54 @@
 # scripts
 
-사람이 직접 실행하는 유틸 스크립트. **성격별 하위 폴더**로 나눈다.
+사람이 직접 실행하는 유틸 스크립트. **설정 대상별**로 나눈다.
 
-| 폴더 | 담는 것 | 예 |
-|------|--------|-----|
-| `setup/` | 1회성 초기 설정 (인프라·저장소·로컬 환경) | `github-config.sh` |
-| `db/` | DB 관련 (시드·백업·일회성 마이그레이션) | *(예정)* |
-| `dev/` | 개발 편의 도구 | *(예정)* |
+```
+scripts/setup/
+├── bootstrap.sh      내 개발 환경 준비 (사람·환경마다 반복 실행)
+└── github/           GitHub 저장소 설정 (저장소당 1회)
+    ├── config.sh
+    └── labels.sh
+```
 
 여기 두지 않는 것
+
 - 앱 런타임 코드 → `apps/*`, `packages/*`
-- 일상 명령(dev·build·test) → 각 `package.json` 스크립트 / `turbo`
+- 일상 명령(dev·build·test) → 루트 `package.json` 스크립트 / `turbo`
 - CI에서 도는 것 → `.github/workflows/`
 
-새 성격의 스크립트가 생기면 폴더를 추가하고 이 표를 갱신한다.
+새 성격의 스크립트가 생기면 폴더를 추가하고 이 문서를 갱신한다.
 
-## setup/
+## `setup/bootstrap.sh`
 
-### `github-config.sh`
-
-저장소 머지 전략·브랜치 보호를 [Git 컨벤션](../docs/conventions/git.md)대로 적용한다. 멱등(재실행 안전).
+개발 환경을 준비한다 — 도구 확인 → Node 버전 맞춤(mise) → 의존성 설치(yarn) → 워크스페이스 연결 검증.
 
 ```bash
-./scripts/setup/github-config.sh            # origin 저장소에 적용
-./scripts/setup/github-config.sh OWNER/REPO # 대상 지정
+yarn setup                      # 또는
+./scripts/setup/bootstrap.sh
+```
+
+- 멱등하다. 이미 갖춰진 환경에서 다시 돌려도 안전하다.
+- **시스템 도구(mise·corepack)는 설치하지 않고 안내만 하고 멈춘다** — 사용자 시스템을 임의로 바꾸지 않는다.
+- macOS·Linux용. Windows는 WSL에서 실행한다.
+
+## `setup/github/config.sh`
+
+저장소 머지 전략·브랜치 보호(ruleset)를 [Git 컨벤션](../docs/conventions/git.md)대로 적용한다. 멱등(재실행 안전).
+
+```bash
+./scripts/setup/github/config.sh            # origin 저장소에 적용
+./scripts/setup/github/config.sh OWNER/REPO # 대상 지정
 ```
 
 요구: `gh` CLI 로그인 + 해당 저장소 admin 권한.
 
-### `github-labels.sh`
+## `setup/github/labels.sh`
 
-이슈·PR 라벨을 커밋 타입 11종에 맞춰 생성한다. 멱등(`--force`로 갱신).
+이슈·PR 라벨을 커밋 타입 11종에 맞춰 초기화한다.
 
 ```bash
-./scripts/setup/github-labels.sh            # origin 저장소에 적용
-./scripts/setup/github-labels.sh OWNER/REPO # 대상 지정
+./scripts/setup/github/labels.sh            # origin 저장소에 적용
+./scripts/setup/github/labels.sh OWNER/REPO # 대상 지정
 ```
 
 이슈 템플릿(`.github/ISSUE_TEMPLATE/`)이 이 라벨명을 참조하므로, 템플릿보다 **먼저 실행**해야 라벨이 자동으로 붙는다.

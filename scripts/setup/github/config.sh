@@ -3,7 +3,7 @@
 # 보호는 classic branch protection 대신 ruleset을 쓴다 — 규칙 중첩·bypass 지정·시범(evaluate) 모드 지원.
 # 재실행해도 안전(멱등: 같은 이름의 ruleset은 갱신). 요구: gh CLI 로그인, 저장소 admin 권한.
 #
-#   ./scripts/setup/github-config.sh [OWNER/REPO]   # 생략 시 현재 origin 사용
+#   ./scripts/setup/github/config.sh [OWNER/REPO]   # 생략 시 현재 origin 사용
 set -euo pipefail
 
 REPO="${1:-$(gh repo view --json nameWithOwner -q .nameWithOwner)}"
