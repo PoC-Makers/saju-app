@@ -9,7 +9,7 @@
 - [ ] **ESLint + Prettier** — 린트·포맷. → "클린코드" 컨벤션에서 규칙 확정.
 - [ ] **husky + lint-staged** — 커밋 전 자동 lint·format 훅.
   - [ ] **pre-commit 시크릿 스캔 (필수)** — 키·토큰·비밀번호·인증서 패턴이 스테이징에 섞이면 커밋 차단.
-    저장소가 public이라 사람·AI의 주의에 의존하지 않고 기계적으로 막는다. → [보안 컨벤션](conventions/security.md)
+    저장소가 public이라 사람·AI의 주의에 의존하지 않고 기계적으로 막는다. → [Git·공개 저장소 보안 컨벤션](conventions/git-security.md)
 
 ## 도입 검토 (미확정)
 

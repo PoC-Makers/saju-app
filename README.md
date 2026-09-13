@@ -64,9 +64,10 @@ yarn install
 | 문서 | 내용 |
 |------|------|
 | [설계안](docs/plans/2026-08-06-saju-app-design.md) | 아키텍처·MVP 범위·로드맵 |
-| [보안 컨벤션](docs/conventions/security.md) | 공개 저장소에서 지켜야 할 것 |
+| [Git·공개 저장소 보안 컨벤션](docs/conventions/git-security.md) | 공개 저장소에서 지켜야 할 것 |
+| [코드 스타일 컨벤션](docs/conventions/code-style.md) | 3원칙(KISS·YAGNI·DRY)·조건 네이밍 등 코드 작성 규칙 |
 | [Git 컨벤션](docs/conventions/git.md) | 커밋·브랜치·이슈/PR·머지 전략 |
 | [파일시스템 컨벤션](docs/conventions/filesystem.md) | 패키지명·폴더 배치·내부 구조 |
 | [셋업 TODO](docs/setup-todo.md) | 아직 설정하지 않은 도구 |
 
-> ⚠️ 이 저장소는 **public**이다. 커밋·이슈·PR을 올리기 전 [보안 컨벤션](docs/conventions/security.md)을 확인할 것.
+> ⚠️ 이 저장소는 **public**이다. 커밋·이슈·PR을 올리기 전 [Git·공개 저장소 보안 컨벤션](docs/conventions/git-security.md)을 확인할 것.
