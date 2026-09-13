@@ -1,0 +1,4 @@
+# 셸 스크립트는 항상 LF로 체크아웃한다.
+# Windows에서 core.autocrlf=true로 받으면 CRLF가 되어 WSL·Linux의 bash가
+# `$'\r': command not found`로 죽는다 (yarn setup 실패 원인).
+*.sh text eol=lf
