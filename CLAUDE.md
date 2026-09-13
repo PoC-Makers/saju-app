@@ -35,7 +35,7 @@
 | 커밋·이슈·PR 등 **공개되는 것을 올리기 전** | `docs/conventions/git-security.md` | 금지 항목, 커밋 전 검증 절차, 노출 시 대응(먼저 보고→폐기 판단) |
 | 커밋·브랜치·이슈·PR 작업 | `docs/conventions/git.md` | 커밋 타입 11종·scope, 브랜치 전략, 이슈·PR 규칙, 머지 전략, 브랜치 보호 |
 | 파일·폴더 생성·이동·이름 변경 | `docs/conventions/filesystem.md` | 패키지명(@saju/*), 폴더 배치, 파일 네이밍, core/api/web 내부 구조·의존 규칙 |
-| 코드 작성·수정 (함수·타입·조건 설계 포함) | `docs/conventions/code-style.md` | 3원칙(KISS>YAGNI>DRY)과 판별법, 조건 이름 규칙 (작성 중 — 네이밍·타입·포맷 추가 예정) |
+| 코드 작성·수정 (함수·타입·조건 설계 포함) | `docs/conventions/code-style.md` | 3원칙(KISS>YAGNI>DRY)과 판별법, 조건 이름 규칙, 타입 정의(I 접두사 금지, type 기본 + interface 세 경우) (작성 중 — 네이밍·enum·포맷 추가 예정) |
 
 - 같은 세션에서 이미 읽었다면 다시 읽지 않아도 된다.
 - 새 컨벤션 문서를 추가하면 이 표에 트리거와 함께 등록한다.
