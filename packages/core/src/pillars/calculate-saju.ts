@@ -28,9 +28,14 @@ function calculateFourPillars(birth: Birth, time: ClockTime, ziBoundary: ZiBound
 
     // 날짜 경계·시지 판정은 진태양시 보정 이후에 한다 — 순서가 바뀌면 23시 전후가 통째로 틀린다
     const trueSolar = toTrueSolarTime(birthUtc, birth.longitude);
-    const shouldRollToNextDay = ziBoundary === "next-day" && isLateZiHour(trueSolar.time);
-    const day = dayPillar(shouldRollToNextDay ? nextDay(trueSolar.date) : trueSolar.date);
-    const hour = hourPillar(day, trueSolar.time);
+
+    // 야자시의 시주는 다음날 자시다 (갑일 23시 → 병자시). ziBoundary는 일주만 바꾼다
+    const isLateZi = isLateZiHour(trueSolar.time);
+    const nextDayPillar = dayPillar(nextDay(trueSolar.date));
+    const hour = hourPillar(isLateZi ? nextDayPillar : dayPillar(trueSolar.date), trueSolar.time);
+
+    const shouldRollToNextDay = ziBoundary === "next-day" && isLateZi;
+    const day = shouldRollToNextDay ? nextDayPillar : dayPillar(trueSolar.date);
 
     return { year, month, day, hour };
 }

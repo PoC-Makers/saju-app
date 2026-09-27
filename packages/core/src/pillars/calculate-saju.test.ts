@@ -39,29 +39,44 @@ describe("calculateSaju", () => {
     });
 
     describe("자시 경계 (D2) — 진태양시 보정 이후에 판정", () => {
-        // 2024-04-15 23:55 KST → 진태양시 약 23:23 (야자시)
-        const lateZi = birth({ year: 2024, month: 4, day: 15 }, { hour: 23, minute: 55 });
-        const sameDay = dayPillar({ year: 2024, month: 4, day: 15 });
-        const nextDay = dayPillar({ year: 2024, month: 4, day: 16 });
+        // 2024-04-10은 갑진일, 다음날은 을사일. 23:55 KST → 진태양시 약 23:22 (야자시)
+        const lateZi = birth({ year: 2024, month: 4, day: 10 }, { hour: 23, minute: 55 });
 
-        it("keep-day(기본) — 일주는 당일", () => {
-            const result = calculateSaju(lateZi);
-            expect(result.day).toEqual(sameDay);
-            expect(result.hour?.branch).toBe("자");
+        it("전제 확인 — 갑진일 다음날은 을사일", () => {
+            expect(dayPillar({ year: 2024, month: 4, day: 10 })).toEqual({ stem: "갑", branch: "진" });
+            expect(dayPillar({ year: 2024, month: 4, day: 11 })).toEqual({ stem: "을", branch: "사" });
         });
 
-        it("next-day — 일주가 다음날로, 시간(時干)도 연쇄로 바뀐다", () => {
-            const keepDay = calculateSaju(lateZi, { ziBoundary: "keep-day" });
-            const nextDayResult = calculateSaju(lateZi, { ziBoundary: "next-day" });
-            expect(nextDayResult.day).toEqual(nextDay);
-            expect(nextDayResult.hour?.branch).toBe("자");
-            expect(nextDayResult.hour?.stem).not.toBe(keepDay.hour?.stem);
+        it("keep-day(기본) — 일주는 당일, 시주는 다음날 자시 (갑일 야자시 → 병자)", () => {
+            const result = calculateSaju(lateZi);
+            expect(result.day).toEqual({ stem: "갑", branch: "진" });
+            expect(result.hour).toEqual({ stem: "병", branch: "자" });
+        });
+
+        it("next-day — 일주만 다음날로 넘어가고 시주는 같다", () => {
+            const result = calculateSaju(lateZi, { ziBoundary: "next-day" });
+            expect(result.day).toEqual({ stem: "을", branch: "사" });
+            expect(result.hour).toEqual({ stem: "병", branch: "자" });
+        });
+
+        it("조자시(00시대)는 그날 일간 기준 — 을사일 00:30은 병자시", () => {
+            // 2024-04-11 01:05 KST → 진태양시 약 00:32
+            const result = calculateSaju(birth({ year: 2024, month: 4, day: 11 }, { hour: 1, minute: 5 }));
+            expect(result.day).toEqual({ stem: "을", branch: "사" });
+            expect(result.hour).toEqual({ stem: "병", branch: "자" });
+        });
+
+        it("해시(21~23시)는 당일 일간 기준 — 갑일 해시는 을해", () => {
+            // 2024-04-10 23:20 KST → 진태양시 약 22:47
+            const result = calculateSaju(birth({ year: 2024, month: 4, day: 10 }, { hour: 23, minute: 20 }));
+            expect(result.day).toEqual({ stem: "갑", branch: "진" });
+            expect(result.hour).toEqual({ stem: "을", branch: "해" });
         });
 
         it("벽시계 00:20은 진태양시로 전날 23시대 — 일주는 전날", () => {
-            const result = calculateSaju(birth({ year: 2024, month: 4, day: 16 }, { hour: 0, minute: 20 }));
-            expect(result.day).toEqual(sameDay);
-            expect(result.hour?.branch).toBe("자");
+            const result = calculateSaju(birth({ year: 2024, month: 4, day: 11 }, { hour: 0, minute: 20 }));
+            expect(result.day).toEqual({ stem: "갑", branch: "진" });
+            expect(result.hour).toEqual({ stem: "병", branch: "자" });
         });
     });
 

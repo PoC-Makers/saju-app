@@ -28,7 +28,10 @@ export function hourBranchIndex(time: ClockTime): number {
     return Math.floor(minutesSinceZiStart / MINUTES_PER_BRANCH);
 }
 
-/** 시주 — 시간(時干)은 일간에서 유도된다. 일주가 바뀌면 시주도 함께 바뀐다 */
+/**
+ * 시주 — 시간(時干)은 넘겨받은 날의 일간에서 유도된다.
+ * 야자시라면 호출부가 다음날 일주를 넘긴다 — 시주는 60갑자 순서대로 이어져야 한다
+ */
 export function hourPillar(day: Pillar, trueSolarTime: ClockTime): Pillar {
     const ziHourStem = ZI_HOUR_STEM_BY_DAY_STEM[day.stem];
     const branchIndex = hourBranchIndex(trueSolarTime);
