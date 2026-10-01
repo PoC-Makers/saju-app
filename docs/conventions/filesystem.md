@@ -42,6 +42,7 @@ saju-app/
 | 테스트 | 대상 파일명 + `.test.ts` | `calculate-pillars.test.ts` |
 | 타입 전용 파일 | kebab-case + `.types.ts` | `saju.types.ts` |
 | 배럴 파일 | `index.ts` | 패키지 공개 진입점만 |
+| 문서 쉬운 버전 | 원문 파일명 + `.easy.md` | `saju-app-design.easy.md` (→ `docs.md`) |
 
 - **kebab-case 기본** — macOS(대소문자 무시)와 Linux CI(구분)의 차이로 생기는 "로컬은 되는데 CI에서 깨짐" 사고를 차단한다.
 - **컴포넌트만 PascalCase** — 파일명 = 컴포넌트명이라 import가 자연스럽다.

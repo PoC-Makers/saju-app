@@ -35,6 +35,7 @@
 | 커밋·이슈·PR 등 **공개되는 것을 올리기 전** | `docs/conventions/security.md` | 금지 항목, 커밋 전 검증 절차, 노출 시 대응(먼저 보고→폐기 판단) |
 | 커밋·브랜치·이슈·PR 작업 | `docs/conventions/git.md` | 커밋 타입 11종·scope, 브랜치 전략, 이슈·PR 규칙, 머지 전략, 브랜치 보호 |
 | 파일·폴더 생성·이동·이름 변경 | `docs/conventions/filesystem.md` | 패키지명(@saju/*), 폴더 배치, 파일 네이밍, core/api/web 내부 구조·의존 규칙 |
+| `docs/plans/`에 설계·조사·계획 문서 작성·수정 | `docs/conventions/docs.md` | **원문 + 초보자용 쉬운 버전(`*.easy.md`) 두 벌을 함께 만들어 같은 커밋으로 올린다** |
 
 - 같은 세션에서 이미 읽었다면 다시 읽지 않아도 된다.
 - 새 컨벤션 문서를 추가하면 이 표에 트리거와 함께 등록한다.
