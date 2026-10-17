@@ -1,7 +1,9 @@
+import type { FIVE_ELEMENTS } from "../constants/five-elements";
 import type { EARTHLY_BRANCHES, HEAVENLY_STEMS } from "../constants/ganji";
 
 export type HeavenlyStem = (typeof HEAVENLY_STEMS)[number];
 export type EarthlyBranch = (typeof EARTHLY_BRANCHES)[number];
+export type FiveElement = (typeof FIVE_ELEMENTS)[number];
 
 export type Pillar = { stem: HeavenlyStem; branch: EarthlyBranch };
 
