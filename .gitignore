@@ -39,3 +39,7 @@ coverage/
 
 # 개인 학습 기록 (learning-recap 산출물) — 개인화 문서라 추적 안 함
 docs/recaps/
+
+# 내부 참고자료 — 저장소가 public이라 팀 내부용 문서는 추적하지 않는다.
+# 경쟁사 분석처럼 "내부 공유용"으로 작성된 문서가 여기 해당한다.
+docs/plans/2026-08-30-sajudoryeong-feature-map.html
